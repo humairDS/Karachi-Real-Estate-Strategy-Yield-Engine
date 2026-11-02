@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+*.egg-info/
+.streamlit/secrets.toml
+data/sql/*.db
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

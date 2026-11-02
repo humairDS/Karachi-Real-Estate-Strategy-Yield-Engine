@@ -1,0 +1,15 @@
+-- Import CSVs from powerbi/exports/ into Power BI Desktop.
+-- Create relationships: fact_sale[location_std] → dim from distinct locations
+-- or connect SQLite (data/sql/karachi_real_estate.db) via ODBC.
+
+Median Sale PKR = MEDIAN ( fact_sale[price_pkr] )
+Median Sale Crore = [Median Sale PKR] / 10000000
+Median PSF = MEDIAN ( fact_sale[price_per_sqft] )
+Sale Listings = COUNTROWS ( fact_sale )
+Rent Listings = COUNTROWS ( fact_rent )
+Median Monthly Rent = MEDIAN ( fact_rent[price_pkr] )
+Gross Yield % = DIVIDE ( [Median Monthly Rent] * 12, [Median Sale PKR] ) * 100
+Net Yield % = [Gross Yield %] - 9.5
+Payback Years = DIVIDE ( [Median Sale PKR], [Median Monthly Rent] * 12 )
+Beats Policy Rate = IF ( [Net Yield %] > 11.5, "Yes", "No" )
+Investment Score = [Gross Yield %] * 0.6 + LOG ( [Sale Listings] + [Rent Listings] + 1 ) * 2
